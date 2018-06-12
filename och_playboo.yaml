@@ -1,3 +1,9 @@
+#Auth:Qing.Yu
+#Mail:1753330141@qq.com
+# Ver:V1.0
+#Date:2018-06-12
+#Remark:依次执行数据库逻辑备份（bakProc_ORADB_Remote.sh基于SCN号），备份文件的汇总和删除
+
 ---
 - hosts: oradb
   remote_user: root
