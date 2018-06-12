@@ -1,0 +1,40 @@
+---
+- hosts: oradb
+  remote_user: root
+  tasks:
+  - name: backup ORADB
+    remote_user: oracle
+    #shell: source ~/.bash_profile;whoami;pwd;echo $ORACLE_SID
+    #shell: whoami;pwd;echo $ORACLE_SID
+    script: /root/bakORADB/bakProc_ORADB_Remote.sh
+
+  - name: list file
+    remote_user: oracle
+    find:
+      paths: /media/ORADB/DBSoftware/app/oracle/admin/OAPROD8/dpdump/
+      patterns: "*.dmp"
+    register: file_2_fetch 
+
+  - name: move bakData to File Server
+    remote_user: oracle
+    fetch: 
+      src: "{{ item.path }}"
+      dest: /root/bakORADB/bakFolder/
+      flat: yes
+    with_items: "{{ file_2_fetch.files }}"
+    
+  - name: list file 2
+    remote_user: oracle
+    find:
+      paths: /media/ORADB/DBSoftware/app/oracle/admin/OAPROD8/dpdump/
+      patterns: "*.dmp"
+    register: file_2_fetch 
+    
+  - name: remove filename
+    remote_user: oracle
+    file:
+      path: "{{ item.path }}"    
+      state: absent
+    with_items: "{{ file_2_fetch.files }}"
+
+    
