@@ -29,13 +29,6 @@
       flat: yes
     with_items: "{{ file_2_fetch.files }}"
     
-  - name: list file 2
-    remote_user: oracle
-    find:
-      paths: /media/ORADB/DBSoftware/app/oracle/admin/OAPROD8/dpdump/
-      patterns: "*.dmp"
-    register: file_2_fetch 
-    
   - name: remove filename
     remote_user: oracle
     file:
