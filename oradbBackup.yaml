@@ -38,8 +38,7 @@
 
 - hosts: zabbix
   tasks:
-  - name: bakResult
+  - name: push bakresult to weiChat
     remote_user: root
-    #æµ‹è¯•
     shell: bash /root/Ansible_Playbook/Script/bakResult.sh
 
