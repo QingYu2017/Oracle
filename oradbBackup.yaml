@@ -6,7 +6,7 @@
 - hosts: oradb
   remote_user: root
   tasks:
-  - name: backup ORADB
+  - name: backup ORADB to dmp files
     remote_user: oracle
     script: /root/Ansible_Playbook/Script/bakProc_ORADB_Remote.sh
 
@@ -21,7 +21,7 @@
       patterns: "*.dmp"
     register: file_2_fetch 
 
-  - name: move dmp files to File Server
+  - name: move dmp files to file server
     remote_user: oracle
     fetch: 
       src: "{{ item.path }}"
@@ -29,7 +29,7 @@
       flat: yes
     with_items: "{{ file_2_fetch.files }}"
    
-  - name: remove dump files
+  - name: remove dmp files
     remote_user: oracle
     file:
       path: "{{ item.path }}"    
