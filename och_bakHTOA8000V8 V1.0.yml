@@ -24,7 +24,7 @@
       patterns: "*.zip"
     register: file_2_fetch 
 
-  - name: move backfiles to file server
+  - name: move backup files to file server
     remote_user: root
     fetch: 
       src: "{{ item.path }}"
