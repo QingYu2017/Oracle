@@ -3,6 +3,13 @@
 # Ver:V1.0
 #Date:2018-07-06
 ---
+- hosts: zabbix
+  tasks:  
+  - name: create local backup folder
+    file:
+      path: /root/bakORADB/bakFolder/{{ ansible_date_time.date }}
+      state: directory
+
 - hosts: htoa8000V8
   remote_user: root
   tasks:
@@ -10,3 +17,24 @@
     remote_user: root
     script: /root/Ansible_Playbook/Script/bakHTOA8000V8.sh
 
+  - name: list backup files
+    remote_user: root
+    find:
+      paths: /root/bakHTOA8000V8/
+      patterns: "*.zip"
+    register: file_2_fetch 
+
+  - name: move backfiles to file server
+    remote_user: root
+    fetch: 
+      src: "{{ item.path }}"
+      dest: /root/bakORADB/bakFolder/{{ ansible_date_time.date }}/
+      flat: yes
+    with_items: "{{ file_2_fetch.files }}"
+
+  - name: remove backup files
+    remote_user: root
+    file:
+      path: "{{ item.path }}"    
+      state: absent
+    with_items: "{{ file_2_fetch.files }}"    
