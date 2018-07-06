@@ -1,0 +1,12 @@
+#Auth:Qing.Yu
+#Mail:1753330141@qq.com
+# Ver:V1.0
+#Date:2018-07-06
+---
+- hosts: htoa8000V8
+  remote_user: root
+  tasks:
+  - name: backup htoa8000 template & trace folder
+    remote_user: root
+    script: /root/Ansible_Playbook/Script/bakHTOA8000V8.sh
+
