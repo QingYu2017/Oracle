@@ -8,7 +8,7 @@ scp $dmp_file oracle@10.xxx.xxx.xx:/media/ORADATA/DBSoftware/app/oracle/admin/OA
 ps -ef|grep tomcat |awk '{print $2}' |awk 'NR==1{print}'|xargs kill
 
 #ssh至oracle服务器
-ssh oracle@10.xxx.xxx.xx
+ssh oracle@10.xxx.xxx.xx<<EOF
 
 #清空UAT数据库
 echo 'drop user htoa8000 cascade;'|sqlplus sys/xxxxxxxx@OAPROD8 as sysdba
@@ -18,7 +18,7 @@ impdp \"sys/xxxxxxxx@OAPROD8 as sysdba\" directory=DATA_PUMP_DIR dumpfile=$dmp_f
 
 #重置用户密码
 echo "update user_user set password='e10adc3949ba59abbe56e057f20f883e';" | sqlplus htoa8000/xxxxxxxx@OAPROD8
-
+EOF
 #清空模板目录
 rm -rf /home/htoa/tomcat/webapps/ROOT/htoa/template/
 
