@@ -16,61 +16,6 @@
 
 ### 示例
 
-备份(HTOA8000V8_Sync_UAT.sh)
-
-```shell
-#!/bin/bash 
-#Auth:Qing.Yu
-#Mail:1753330141@qq.com
-# Ver:V1.3
-#Date:2018-08-21
- 
-#获取当前日期
-source ~/.bash_profile
-d=`/bin/date +%Y-%m-%d` 
-p='/root/bakHTOA8000V8'
-cd $p/$d
-
-#定义数据备份文件名
-dmp_file=`/bin/ls -l *.dmp|awk 'NR==1{print $9}'`
-
-#复制备份数据库文件至oracle数据库服务器
-scp $dmp_file oracle@10.xxx.xxx.xx:/media/ORADATA/DBSoftware/app/oracle/admin/OAPROD8/dpdump
-
-#关闭本地tomcat进程
-ps -ef|grep tomcat |awk '{print $2}' |awk '{print}'|xargs kill
-
-#ssh至oracle服务器
-ssh oracle@10.xxx.xxx.xx<<EOF
-#清理归档日志
-echo "delete noprompt archivelog until time 'sysdate-3' ;"|rman target sys/xxxxxxxx@OAPROD8
-#清空UAT数据库
-echo 'drop user htoa8000 cascade;'|sqlplus sys/xxxxxxxx@OAPROD8 as sysdba
-#导入备份数据
-impdp \"sys/xxxxxxxx@OAPROD8 as sysdba\" directory=DATA_PUMP_DIR dumpfile=$dmp_file schemas=htoa8000 encryption_password=xxxxxxxx;
-#重置HTOA8000账号密码
-#echo 'alter user HTOA8000 identified by \"xxxxxxxx\"' |sqlplus sys/xxxxxxxx@OAPROD8 as sysdba
-echo 'alter user HTOA8000 identified by htoa8000' |sqlplus sys/xxxxxxxx@OAPROD8 as sysdba
-#解锁HTOA8000账号
-echo 'alter user HTOA8000 account unlock' |sqlplus sys/xxxxxxxx@OAPROD8 as sysdba
-#重置用户密码
-echo "update user_user set password='e10adc3949baxxxxxxx7f20f883e';" | sqlplus htoa8000/xxxxxxxxx@OAPROD8
-EOF
-
-#清空模板目录
-rm -rf /home/htoa/tomcat/webapps/ROOT/htoa/template/
-
-# 解压缩模板文件
-unzip -P 1234Good $d"_template.zip"
-
-#转移至UAT环境
-mv home/htoa/tomcat/webapps/ROOT/htoa/template/ /home/htoa/tomcat/webapps/ROOT/htoa/
-
-#启动OA服务
-cd /home/htoa/tomcat/bin/
-./startup.sh
-
-```
 
 ![执行示例](https://github.com/QingYu2017/pic/blob/master/jserver_log.gif)
 
