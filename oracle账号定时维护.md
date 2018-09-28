@@ -33,7 +33,7 @@ echo 'alter user test1 account unlock;' |sqlplus sys/password@OAPROD8 as sysdba
 ```
 3. 检查用户状态
 ```
-echo 'select username,account_status from dba_users;' |sqlplus sys/password@OAPROD8 as sysdba
+echo "select username,account_status from dba_users where username='TEST1';" |sqlplus sys/password@OAPROD8 as sysdba
 ```
 4. 注意
 当用户处理链接状态，特别是如O32的trade用户或OA的数据库用户，会发起多个连接进程，此时无法直接对账户进行禁用，可先终止应用服务到数据库的连接，再lock用户。
@@ -55,7 +55,7 @@ ssh oracle@10.666.100.66<< EOF
 '
 d=`/bin/date +%Y%m%d` 
 if [ $d=='2018-09-28' ]; then
-    echo 'alter user test1 account unlock' |sqlplus sys/password@OAPROD8 as sysdba
+    echo 'alter user test1 account lock' |sqlplus sys/password@OAPROD8 as sysdba
 fi 
 '
 EOF
