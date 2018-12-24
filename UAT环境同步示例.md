@@ -48,8 +48,7 @@ echo 'drop user htoa8000 cascade;'|sqlplus sys/xxxxxxxx@OAPROD8 as sysdba
 #导入备份数据
 impdp \"sys/xxxxxxxx@OAPROD8 as sysdba\" directory=DATA_PUMP_DIR dumpfile=$dmp_file schemas=htoa8000 encryption_password=xxxxxxxx;
 #重置HTOA8000账号密码
-#echo 'alter user HTOA8000 identified by \"xxxxxxxx\"' |sqlplus sys/xxxxxxxx@OAPROD8 as sysdba
-echo 'alter user HTOA8000 identified by htoa8000' |sqlplus sys/xxxxxxxx@OAPROD8 as sysdba
+echo 'alter user HTOA8000 identified by \"xxxxxxxx\"' |sqlplus sys/xxxxxxxx@OAPROD8 as sysdba
 #解锁HTOA8000账号
 echo 'alter user HTOA8000 account unlock' |sqlplus sys/xxxxxxxx@OAPROD8 as sysdba
 #重置用户密码
