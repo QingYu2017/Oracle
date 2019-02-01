@@ -15,7 +15,7 @@
 - 佚名. 红旗Linux网络管理教程[M]. 2001.
 
 ### 发现问题：
-- 如果限制了本地访问（127.0.0.1），oem在启停时，尝试与安装信息中指定的hosts通信，请启动对应实例（$ORACLE_SID）的oem，当iptables阻断通信失败，会造成oem启停失败，dbstart/dbshutdown也应存在相同问题。
+- 如果不开放本机访问（127.0.0.1），oem在启停时将尝试与安装信息中指定的hosts通信，并启动对应实例（$ORACLE_SID）的oem，当iptables阻断本机通信，会造成oem启停失败，dbstart/dbshutdown也应存在相同问题。
 
 ![示例](https://github.com/QingYu2017/pic/blob/master/21.png)
 
