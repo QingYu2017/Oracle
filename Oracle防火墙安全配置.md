@@ -1,7 +1,9 @@
-* Auth: Qing.Yu
-* Mail: 1753330141@qq.com
-*  Ver: V1.0
-* Date: 2019-02-01
+```shell
+ Auth: Qing.Yu
+Mail: 1753330141@qq.com
+ Ver: V1.0
+ Date: 2019-02-01
+``` 
 
 ### 设计目的：
 - 允许本地的oem开放对外访问（端口5500，见$ORACLE_HOME/install/portlist.ini）；
