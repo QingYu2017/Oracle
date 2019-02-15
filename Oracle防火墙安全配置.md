@@ -21,7 +21,7 @@ Date: 2019-02-01
 ### 发现问题：
 - 如果不开放本机访问（127.0.0.1），oem在启停时将尝试与安装信息中指定的hosts通信，并启动对应实例（$ORACLE_SID）的oem，当iptables阻断本机通信，会造成oem启停失败，dbstart/dbshutdown也应存在相同问题。
 
-![示例](https://github.com/QingYu2017/pic/blob/master/21.png)
+![示例](https://github.com/QingYu2017/pic/blob/master/25.png)
 
 ### 配置示例：
 ![示例](https://github.com/QingYu2017/pic/blob/master/20.png)
